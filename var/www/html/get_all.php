@@ -11,7 +11,7 @@ if (!$con) {
 }
 
 // Perform a query to fetch all positions from the database
-$result = mysqli_query($con, "SELECT * FROM Position");
+$result = mysqli_query($con, "SELECT * FROM position");
 
 // Check if the query was successful
 if ($result) {
