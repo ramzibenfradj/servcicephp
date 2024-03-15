@@ -1,34 +1,45 @@
 <?php
+// Include the configuration file
 require_once 'config.php';
-// array for JSON response
-$response = array();
-$con= mysqli_connect($server,$user,$mp,$database,$port);
-// get all Amis from  table
-$result = mysqli_query($con,"SELECT *FROM Position") or die(mysqli_error());
-// check for empty result
-if (mysqli_num_rows($result) > 0) {
-	 // success
-    $response["success"] = 1;
-    // looping through all results
-    // Ami node
+
+// Create a connection to the database
+$con = mysqli_connect($server, $user, $mp, $database, $port);
+
+// Check if the connection was successful
+if (!$con) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+// Perform a query to fetch all positions from the database
+$result = mysqli_query($con, "SELECT * FROM Position");
+
+// Check if the query was successful
+if ($result) {
+    // Initialize the response array
+    $response = array();
     $response["positions"] = array();
+
+    // Loop through the result set and add each position to the response array
     while ($row = mysqli_fetch_array($result)) {
-        // temp user array
-        $une_position = array();
-        $une_position["idposition"] = $row["idposition"];
-		$une_position["pseudo"] = $row["pseudo"];
-		$une_position["longitude"] = $row["longitude"];
-		$une_position["latitude"] = $row["latitude"];
-		  
+        $une_position = array(
+            "idposition" => $row["idposition"],
+            "pseudo" => $row["pseudo"],
+            "longitude" => $row["longitude"],
+            "latitude" => $row["latitude"]
+        );
         array_push($response["positions"], $une_position);
     }
-    
-} else {
-    // no Ami found
-    $response["success"] = 0;
-    $response["message"] = "No position found";
 
-}
-// echo result
+    // Set success flag and output the response as JSON
+    $response["success"] = 1;
     echo json_encode($response);
+} else {
+    // If the query fails, set the success flag to 0 and output an error message
+    $response["success"] = 0;
+    $response["message"] = "Error retrieving positions: " . mysqli_error($con);
+    echo json_encode($response);
+}
+
+// Close the database connection
+mysqli_close($con);
 ?>
