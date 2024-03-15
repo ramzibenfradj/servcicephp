@@ -18,7 +18,7 @@ if ($longitude !== null && $latitude !== null && $pseudo !== null) {
     }
 
     // Requête d'insertion
-    $sql = "INSERT INTO Position (longitude, latitude, pseudo) VALUES ('$longitude', '$latitude', '$pseudo')";
+    $sql = "INSERT INTO position (longitude, latitude, pseudo) VALUES ('$longitude', '$latitude', '$pseudo')";
 
     // Exécution de la requête
     if (mysqli_query($con, $sql)) {
