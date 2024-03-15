@@ -1,7 +1,8 @@
 <?php
-$user="root";
-$mp="";
-$database="locationdatabase";
-$server="127.0.0.1";
-$port="3306";
+$user = "sql8691403";
+$password = "5V3uuiKrkH";
+$database = "sql8691403";
+$host = "sql8.freesqldatabase.com";
+$port = 3306;
 ?>
+
