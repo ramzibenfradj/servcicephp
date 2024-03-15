@@ -5,7 +5,7 @@ FROM php:8.0-apache
 WORKDIR /
 
 # Copy source code into the container
-COPY . /
+COPY . /var/www/html
 
 # Install mysqli extension
 RUN docker-php-ext-install mysqli
