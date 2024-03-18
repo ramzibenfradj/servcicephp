@@ -1,11 +1,10 @@
-// Inclusion du fichier de configuration
 require_once 'config.php';
 
 // Récupération des paramètres passés en POST
 $longitude = $_POST['longitude'] ?? null; // Utilisation de la syntaxe ?? pour gérer les valeurs par défaut si le paramètre n'est pas défini
 $latitude = $_POST['latitude'] ?? null;
 $pseudo = $_POST['pseudo'] ?? null;
-$image = $_POST['image'] ?? null; // Assuming image data is sent as a base64-encoded string
+$image = $_POST['imageData'] ?? null; // Assuming image data is sent as a base64-encoded string
 
 // Vérification si les paramètres sont présents
 if ($longitude !== null && $latitude !== null && $pseudo !== null && $image !== null) {
@@ -27,7 +26,7 @@ if ($longitude !== null && $latitude !== null && $pseudo !== null && $image !== 
     $stmt = mysqli_prepare($con, $sql);
 
     // Liaison des paramètres
-    mysqli_stmt_bind_param($stmt, "ddss", $longitude, $latitude, $pseudo, $imageData);
+    mysqli_stmt_bind_param($stmt, "ddsb", $longitude, $latitude, $pseudo, $imageData);
 
     // Exécution de la requête
     if (mysqli_stmt_execute($stmt)) {
