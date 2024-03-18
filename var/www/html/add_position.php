@@ -13,6 +13,7 @@ if ($longitude !== null && $latitude !== null && $pseudo !== null && $image !== 
 
     // Vérification de la connexion
     if (!$con) {
+        error_log("Connexion échouée: " . mysqli_connect_error());
         die("Connexion échouée: " . mysqli_connect_error());
     }
 
@@ -25,6 +26,13 @@ if ($longitude !== null && $latitude !== null && $pseudo !== null && $image !== 
     // Préparation de la requête
     $stmt = mysqli_prepare($con, $sql);
 
+    // Vérification de la préparation de la requête
+    if (!$stmt) {
+        $error_message = "Erreur lors de la préparation de la requête: " . mysqli_error($con);
+        error_log($error_message);
+        die($error_message);
+    }
+
     // Liaison des paramètres
     mysqli_stmt_bind_param($stmt, "ddsb", $longitude, $latitude, $pseudo, $imageData);
 
@@ -32,7 +40,9 @@ if ($longitude !== null && $latitude !== null && $pseudo !== null && $image !== 
     if (mysqli_stmt_execute($stmt)) {
         echo "Position ajoutée avec succès";
     } else {
-        echo "Erreur lors de l'ajout de la position: " . mysqli_error($con);
+        $error_message = "Erreur lors de l'ajout de la position: " . mysqli_error($con);
+        error_log($error_message);
+        echo $error_message;
     }
 
     // Fermeture de la connexion
@@ -40,5 +50,7 @@ if ($longitude !== null && $latitude !== null && $pseudo !== null && $image !== 
     mysqli_close($con);
 } else {
     // Affichage d'un message d'erreur si les paramètres sont manquants
-    echo "Paramètres manquants";
+    $error_message = "Paramètres manquants";
+    error_log($error_message);
+    echo $error_message;
 }
