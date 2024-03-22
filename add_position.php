@@ -2,8 +2,7 @@
 require_once 'config.php';
 
 // Récupération des paramètres passés en POST
-$longitude = $_POST['longitude'] ?? null; // Utilisation de la syntaxe ?? pour gérer les valeurs par défaut si le
-paramètre n'est pas défini
+$longitude = $_POST['longitude'] ?? null; // Utilisation de la syntaxe ?? pour gérer les valeurs par défaut si le paramètre n'est pas défini
 $latitude = $_POST['latitude'] ?? null;
 $pseudo = $_POST['pseudo'] ?? null;
 $image = $_POST['imageData'] ?? null; // Assuming image data is sent as a base64-encoded string
